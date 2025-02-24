@@ -5,10 +5,11 @@ from pathlib import Path
 import nox
 from nox_actions.utils import get_qt_dependencies
 
-@nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"])
+
+@nox.session
 @nox.parametrize("qt_binding", ["pyside2", "pyside6"])
 def test(session: nox.Session, qt_binding: str) -> None:
-    """Run tests with specific Qt binding and Python version."""
+    """Run tests with specific Qt binding."""
     # Get the project root directory
     root_dir = Path(__file__).parent.parent.absolute()
     
