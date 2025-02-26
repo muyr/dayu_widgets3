@@ -6,12 +6,11 @@ import re
 from qtpy import QtCore
 from qtpy import QtGui
 from qtpy import QtWidgets
-import six
 
 # Import local modules
-from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.popup import MPopup
+from dayu_widgets.line_edit import MLineEdit
 import dayu_widgets.utils as utils
 
 
@@ -459,7 +458,7 @@ class SearchableMenuBase(ScrollableMenuBase):
         self.search_bar.setPlaceholderText(value)
 
     def _set_search_re(self, value):
-        if not isinstance(value, six.text_type):
+        if not isinstance(value, str):
             raise TypeError("`search_re` property should be a string type")
 
     def slot_search_change(self, text):
