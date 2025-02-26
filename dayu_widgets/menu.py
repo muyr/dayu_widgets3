@@ -8,9 +8,9 @@ from qtpy import QtGui
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets import MLineEdit
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.popup import MPopup
+from dayu_widgets.line_edit import MLineEdit
 import dayu_widgets.utils as utils
 
 
