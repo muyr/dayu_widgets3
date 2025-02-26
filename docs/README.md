@@ -12,5 +12,5 @@ The screenshots in docs used:
 * Dark: #fa8c16
 
 ```python
-import dayu_widgets3
+import dayu_widgets
 ```

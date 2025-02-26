@@ -4,7 +4,7 @@ from qtpy import QtCore
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3 import mixin
+from dayu_widgets import mixin
 
 
 def test_property_mixin(qtbot):
@@ -33,7 +33,7 @@ def test_cursor_mixin(qtbot):
     class _TestClass(QtWidgets.QPushButton):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
-            geo = QtWidgets.QApplication.desktop().screenGeometry()
+            geo = QtWidgets.QApplication.primaryScreen().geometry()
             self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
 
     main_widget = QtWidgets.QWidget()
@@ -86,7 +86,7 @@ def test_focus_shadow_mixin(qtbot):
     class _TestClass(QtWidgets.QPushButton):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
-            geo = QtWidgets.QApplication.desktop().screenGeometry()
+            geo = QtWidgets.QApplication.primaryScreen().geometry()
             self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
 
     main_widget = QtWidgets.QWidget()
@@ -138,7 +138,7 @@ def test_hover_shadow_mixin(qtbot):
     class _TestClass(QtWidgets.QPushButton):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
-            geo = QtWidgets.QApplication.desktop().screenGeometry()
+            geo = QtWidgets.QApplication.primaryScreen().geometry()
             self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
 
     main_widget = QtWidgets.QWidget()

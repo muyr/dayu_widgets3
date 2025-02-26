@@ -18,7 +18,7 @@ classifiers = [
 ]
 
 packages = [
-    { include = "dayu_widgets3" },
+    { include = "dayu_widgets" },
 ]
 
 [tool.poetry.dependencies]

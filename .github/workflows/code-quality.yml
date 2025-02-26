@@ -1,0 +1,27 @@
+name: Code Quality
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install nox
+    
+    - name: Run linting
+      run: |
+        nox -s lint
+    
+    - name: Run type checking
+      run: |
+        nox -s mypy
