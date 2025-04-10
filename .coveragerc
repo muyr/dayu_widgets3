@@ -1,10 +1,4 @@
-[pytest]
-testpaths = tests/
-python_files = test_*.py
-python_classes = Test*
-python_functions = test_*
-
-[coverage:run]
+[run]
 source = dayu_widgets
 omit =
     */test/*
@@ -13,7 +7,7 @@ omit =
     */examples/*
     setup.py
 
-[coverage:report]
+[report]
 exclude_lines =
     pragma: no cover
     def __repr__
@@ -23,3 +17,6 @@ exclude_lines =
     raise ImportError
 fail_under = 70
 show_missing = True
+
+[html]
+directory = coverage_html_report
