@@ -1,6 +1,5 @@
 # Import built-in modules
 import functools
-from typing import Any, Dict, List, Optional, Union, Callable
 
 # Import third-party modules
 from qtpy import QtCore
@@ -24,7 +23,7 @@ class MButtonGroupBase(QtWidgets.QWidget):
     button creation, and property handling.
     """
 
-    def __init__(self, orientation: QtCore.Qt.Orientation = QtCore.Qt.Horizontal, parent=None):
+    def __init__(self, orientation=QtCore.Qt.Horizontal, parent=None):
         """Initialize the button group base class.
 
         Args:
@@ -45,7 +44,7 @@ class MButtonGroupBase(QtWidgets.QWidget):
         self._button_group = QtWidgets.QButtonGroup()
         self._orientation = "horizontal" if orientation == QtCore.Qt.Horizontal else "vertical"
 
-    def set_spacing(self, value: int) -> None:
+    def set_spacing(self, value):
         """Set the spacing between buttons.
 
         Args:
@@ -53,7 +52,7 @@ class MButtonGroupBase(QtWidgets.QWidget):
         """
         self._main_layout.setSpacing(value)
 
-    def get_button_group(self) -> QtWidgets.QButtonGroup:
+    def get_button_group(self):
         """Get the internal button group.
 
         Returns:
@@ -61,7 +60,7 @@ class MButtonGroupBase(QtWidgets.QWidget):
         """
         return self._button_group
 
-    def create_button(self, data_dict: Dict[str, Any]) -> QtWidgets.QAbstractButton:
+    def create_button(self, data_dict):
         """Create a button based on the provided data.
 
         This method must be implemented by subclasses.
@@ -74,7 +73,7 @@ class MButtonGroupBase(QtWidgets.QWidget):
         """
         raise NotImplementedError()
 
-    def add_button(self, data_dict: Union[str, QtGui.QIcon, Dict[str, Any]], index: Optional[int] = None) -> QtWidgets.QAbstractButton:
+    def add_button(self, data_dict, index=None):
         """Add a button to the group.
 
         Args:
@@ -116,7 +115,7 @@ class MButtonGroupBase(QtWidgets.QWidget):
         self._main_layout.insertWidget(self._main_layout.count(), button)
         return button
 
-    def set_button_list(self, button_list: List[Dict[str, Any]]) -> None:
+    def set_button_list(self, button_list):
         """Set the list of buttons in the group.
 
         This removes any existing buttons and adds the new ones.
@@ -162,7 +161,7 @@ class MPushButtonGroup(MButtonGroupBase):
         self._dayu_size = dayu_theme.default_size
         self._button_group.setExclusive(False)
 
-    def create_button(self, data_dict: Dict[str, Any]) -> MPushButton:
+    def create_button(self, data_dict):
         """Create a push button with the specified properties.
 
         Args:
@@ -176,7 +175,7 @@ class MPushButtonGroup(MButtonGroupBase):
         button.set_dayu_type(data_dict.get("dayu_type", self._dayu_type))
         return button
 
-    def get_dayu_size(self) -> int:
+    def get_dayu_size(self):
         """Get the button size.
 
         Returns:
@@ -184,7 +183,7 @@ class MPushButtonGroup(MButtonGroupBase):
         """
         return self._dayu_size
 
-    def get_dayu_type(self) -> str:
+    def get_dayu_type(self):
         """Get the button type.
 
         Returns:
@@ -192,7 +191,7 @@ class MPushButtonGroup(MButtonGroupBase):
         """
         return self._dayu_type
 
-    def set_dayu_size(self, value: int) -> None:
+    def set_dayu_size(self, value):
         """Set the button size.
 
         Args:
@@ -200,7 +199,7 @@ class MPushButtonGroup(MButtonGroupBase):
         """
         self._dayu_size = value
 
-    def set_dayu_type(self, value: str) -> None:
+    def set_dayu_type(self, value):
         """Set the button type.
 
         Args:
@@ -238,7 +237,7 @@ class MCheckBoxGroup(MButtonGroupBase):
         self._button_group.idClicked.connect(self._slot_map_signal)
         self._dayu_checked = []
 
-    def create_button(self, data_dict: Dict[str, Any]) -> MCheckBox:
+    def create_button(self, data_dict):
         """Create a checkbox with the specified properties.
 
         Args:
@@ -250,7 +249,7 @@ class MCheckBoxGroup(MButtonGroupBase):
         return MCheckBox()
 
     @QtCore.Slot(QtCore.QPoint)
-    def _slot_context_menu(self, point: QtCore.QPoint) -> None:
+    def _slot_context_menu(self, point):
         """Show context menu for checkbox selection operations.
 
         Args:
@@ -266,7 +265,7 @@ class MCheckBoxGroup(MButtonGroupBase):
         context_menu.exec_(QtGui.QCursor.pos() + QtCore.QPoint(10, 10))
 
     @QtCore.Slot(bool)
-    def _slot_set_select(self, state: Optional[bool]) -> None:
+    def _slot_set_select(self, state):
         """Set the selection state of all checkboxes.
 
         Args:
@@ -281,7 +280,7 @@ class MCheckBoxGroup(MButtonGroupBase):
         self._slot_map_signal()
 
     @QtCore.Slot(int)
-    def _slot_map_signal(self, state: Optional[int] = None) -> None:
+    def _slot_map_signal(self, state=None):
         """Update the checked state and emit the signal.
 
         Args:
@@ -294,7 +293,7 @@ class MCheckBoxGroup(MButtonGroupBase):
         ]
         self.sig_checked_changed.emit(checked_buttons)
 
-    def set_dayu_checked(self, value: Union[str, List[str]]) -> None:
+    def set_dayu_checked(self, value):
         """Set the checked items.
 
         Args:
@@ -315,7 +314,7 @@ class MCheckBoxGroup(MButtonGroupBase):
 
         self.sig_checked_changed.emit(value)
 
-    def get_dayu_checked(self) -> List[str]:
+    def get_dayu_checked(self):
         """Get the currently checked items.
 
         Returns:
@@ -362,7 +361,7 @@ class MRadioButtonGroup(MButtonGroupBase):
         self._button_group.setExclusive(True)
         self._button_group.idClicked.connect(self.sig_checked_changed)
 
-    def create_button(self, data_dict: Dict[str, Any]) -> MRadioButton:
+    def create_button(self, data_dict):
         """Create a radio button with the specified properties.
 
         Args:
@@ -373,7 +372,7 @@ class MRadioButtonGroup(MButtonGroupBase):
         """
         return MRadioButton()
 
-    def set_dayu_checked(self, value: int) -> None:
+    def set_dayu_checked(self, value):
         """Set the checked radio button by ID.
 
         Args:
@@ -389,7 +388,7 @@ class MRadioButtonGroup(MButtonGroupBase):
         else:
             print("Error: No radio button with ID {}".format(value))
 
-    def get_dayu_checked(self) -> int:
+    def get_dayu_checked(self):
         """Get the ID of the currently checked radio button.
 
         Returns:
@@ -420,10 +419,10 @@ class MToolButtonGroup(MButtonGroupBase):
 
     def __init__(
         self,
-        size: Optional[int] = None,
-        type: Optional[str] = None,
-        exclusive: bool = False,
-        orientation: QtCore.Qt.Orientation = QtCore.Qt.Horizontal,
+        size=None,
+        type=None,
+        exclusive=False,
+        orientation=QtCore.Qt.Horizontal,
         parent=None,
     ):
         """Initialize the tool button group.
@@ -442,7 +441,7 @@ class MToolButtonGroup(MButtonGroupBase):
         self._type = type
         self._button_group.idClicked.connect(self.sig_checked_changed)
 
-    def create_button(self, data_dict: Dict[str, Any]) -> MToolButton:
+    def create_button(self, data_dict):
         """Create a tool button with the specified properties.
 
         Args:
@@ -463,7 +462,7 @@ class MToolButtonGroup(MButtonGroupBase):
             button.icon_only()
         return button
 
-    def set_dayu_checked(self, value: int) -> None:
+    def set_dayu_checked(self, value):
         """Set the checked tool button by ID.
 
         Args:
@@ -478,7 +477,7 @@ class MToolButtonGroup(MButtonGroupBase):
         else:
             print("Error: No tool button with ID {}".format(value))
 
-    def get_dayu_checked(self) -> int:
+    def get_dayu_checked(self):
         """Get the ID of the currently checked tool button.
 
         Returns:

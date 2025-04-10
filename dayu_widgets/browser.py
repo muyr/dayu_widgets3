@@ -8,7 +8,6 @@ Browser files or folders by dragging.
 
 # Import built-in modules
 import os
-from typing import List, Optional, Union
 
 # Import third-party modules
 from qtpy import QtCore
@@ -99,7 +98,7 @@ class MBrowserMixin:
         self._multiple = multiple
         self._filters = []
 
-    def get_dayu_filters(self) -> List[str]:
+    def get_dayu_filters(self):
         """Get browser's format filters.
 
         Returns:
@@ -107,7 +106,7 @@ class MBrowserMixin:
         """
         return self._filters
 
-    def set_dayu_filters(self, value: List[str]) -> None:
+    def set_dayu_filters(self, value):
         """Set browser file format filters.
 
         Args:
@@ -115,7 +114,7 @@ class MBrowserMixin:
         """
         self._filters = value
 
-    def get_dayu_path(self) -> Optional[str]:
+    def get_dayu_path(self):
         """Get last browser file path.
 
         Returns:
@@ -123,7 +122,7 @@ class MBrowserMixin:
         """
         return self._path
 
-    def set_dayu_path(self, value: Union[str, List[str]]) -> None:
+    def set_dayu_path(self, value):
         """Set browser file start path.
 
         Args:
@@ -131,7 +130,7 @@ class MBrowserMixin:
         """
         self._path = value
 
-    def get_dayu_multiple(self) -> bool:
+    def get_dayu_multiple(self):
         """Get browser can select multiple file or not.
 
         Returns:
@@ -139,7 +138,7 @@ class MBrowserMixin:
         """
         return self._multiple
 
-    def set_dayu_multiple(self, value: bool) -> None:
+    def set_dayu_multiple(self, value):
         """Set browser can select multiple file or not.
 
         Args:
@@ -155,7 +154,7 @@ class MClickBrowserFilePushButton(MPushButton, MBrowserMixin):
     sig_files_changed = QtCore.Signal(list)
     slot_browser_file = _slot_browser_file
 
-    def __init__(self, text: str = "Browser", multiple: bool = False, parent=None):
+    def __init__(self, text="Browser", multiple=False, parent=None):
         MPushButton.__init__(self, text=text, parent=parent)
         MBrowserMixin.__init__(self, multiple=multiple)
         self.setProperty("multiple", multiple)
@@ -175,7 +174,7 @@ class MClickBrowserFileToolButton(MToolButton, MBrowserMixin):
     sig_files_changed = QtCore.Signal(list)
     slot_browser_file = _slot_browser_file
 
-    def __init__(self, multiple: bool = False, parent=None):
+    def __init__(self, multiple=False, parent=None):
         MToolButton.__init__(self, parent=parent)
         MBrowserMixin.__init__(self, multiple=multiple)
         self.set_dayu_svg("cloud_line.svg")
@@ -195,7 +194,7 @@ class MClickSaveFileToolButton(MToolButton, MBrowserMixin):
     sig_file_changed = QtCore.Signal(str)
     slot_browser_file = _slot_save_file
 
-    def __init__(self, multiple: bool = False, parent=None):
+    def __init__(self, multiple=False, parent=None):
         MToolButton.__init__(self, parent=parent)
         MBrowserMixin.__init__(self, multiple=multiple)
         self.set_dayu_svg("save_line.svg")
@@ -215,7 +214,7 @@ class MDragFileButton(MToolButton, MBrowserMixin):
     sig_files_changed = QtCore.Signal(list)
     slot_browser_file = _slot_browser_file
 
-    def __init__(self, text: str = "", multiple: bool = False, parent=None):
+    def __init__(self, text="", multiple=False, parent=None):
         MToolButton.__init__(self, parent=parent)
         MBrowserMixin.__init__(self, multiple=multiple)
         self.setAcceptDrops(True)
@@ -237,7 +236,7 @@ class MDragFileButton(MToolButton, MBrowserMixin):
     dayu_path = QtCore.Property(str, MBrowserMixin.get_dayu_path, MBrowserMixin.set_dayu_path)
     dayu_filters = QtCore.Property(list, MBrowserMixin.get_dayu_filters, MBrowserMixin.set_dayu_filters)
 
-    def dragEnterEvent(self, event: QtGui.QDragEnterEvent) -> None:
+    def dragEnterEvent(self, event):
         """Override dragEnterEvent. Validate dragged files.
 
         Args:
@@ -250,7 +249,7 @@ class MDragFileButton(MToolButton, MBrowserMixin):
                 event.acceptProposedAction()
                 return
 
-    def dropEvent(self, event: QtGui.QDropEvent) -> None:
+    def dropEvent(self, event):
         """Override dropEvent to accept the dropped files.
 
         Args:
@@ -264,7 +263,7 @@ class MDragFileButton(MToolButton, MBrowserMixin):
             self.sig_file_changed.emit(file_list[0])
             self.set_dayu_path(file_list[0])
 
-    def _get_valid_file_list(self, url_list) -> List[str]:
+    def _get_valid_file_list(self, url_list):
         """Get a list of valid files from the dropped URLs.
 
         Args:
@@ -307,7 +306,7 @@ class MClickBrowserFolderPushButton(MPushButton, MBrowserMixin):
     sig_folders_changed = QtCore.Signal(list)
     slot_browser_folder = _slot_browser_folder
 
-    def __init__(self, text: str = "", multiple: bool = False, parent=None):
+    def __init__(self, text="", multiple=False, parent=None):
         MPushButton.__init__(self, text=text, parent=parent)
         MBrowserMixin.__init__(self, multiple=multiple)
         self.setProperty("multiple", multiple)
@@ -327,7 +326,7 @@ class MClickBrowserFolderToolButton(MToolButton, MBrowserMixin):
     sig_folders_changed = QtCore.Signal(list)
     slot_browser_folder = _slot_browser_folder
 
-    def __init__(self, multiple: bool = False, parent=None):
+    def __init__(self, multiple=False, parent=None):
         MToolButton.__init__(self, parent=parent)
         MBrowserMixin.__init__(self, multiple=multiple)
         self.set_dayu_svg("folder_line.svg")
@@ -349,7 +348,7 @@ class MDragFolderButton(MToolButton, MBrowserMixin):
     sig_folders_changed = QtCore.Signal(list)
     slot_browser_folder = _slot_browser_folder
 
-    def __init__(self, multiple: bool = False, parent=None):
+    def __init__(self, multiple=False, parent=None):
         MToolButton.__init__(self, parent=parent)
         MBrowserMixin.__init__(self, multiple=multiple)
         self.setAcceptDrops(True)
@@ -369,7 +368,7 @@ class MDragFolderButton(MToolButton, MBrowserMixin):
     dayu_multiple = QtCore.Property(bool, MBrowserMixin.get_dayu_multiple, MBrowserMixin.set_dayu_multiple)
     dayu_path = QtCore.Property(str, MBrowserMixin.get_dayu_path, MBrowserMixin.set_dayu_path)
 
-    def dragEnterEvent(self, event: QtGui.QDragEnterEvent) -> None:
+    def dragEnterEvent(self, event):
         """Override dragEnterEvent. Validate dragged folders.
 
         Args:
@@ -387,7 +386,7 @@ class MDragFolderButton(MToolButton, MBrowserMixin):
                 event.acceptProposedAction()
                 return
 
-    def dropEvent(self, event: QtGui.QDropEvent) -> None:
+    def dropEvent(self, event):
         """Override dropEvent to accept the dropped folders.
 
         Args:
